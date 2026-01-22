@@ -1,12 +1,12 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.eeTele;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
-@TeleOp(name = "Q2 TeleOp (No Turret)", group = "TeleOp")
-public class TestVar extends LinearOpMode {
+@TeleOp(name = "Q2 TeleOp (v2)", group = "TeleOp")
+public class TeleV2 extends LinearOpMode {
 
     // Drive motors
     public DcMotorEx lf, lr, rf, rr;
@@ -25,10 +25,10 @@ public class TestVar extends LinearOpMode {
     public void runOpMode() {
 
         // Drive motors
-        lf = hardwareMap.get(DcMotorEx.class, "lf");
-        lr = hardwareMap.get(DcMotorEx.class, "lr");
-        rf = hardwareMap.get(DcMotorEx.class, "rf");
-        rr = hardwareMap.get(DcMotorEx.class, "rr");
+        lf = hardwareMap.get(DcMotorEx.class, "frontLeft");
+        lr = hardwareMap.get(DcMotorEx.class, "backLeft");
+        rf = hardwareMap.get(DcMotorEx.class, "frontRight");
+        rr = hardwareMap.get(DcMotorEx.class, "backRight");
 
         lf.setDirection(DcMotorSimple.Direction.FORWARD);
         lr.setDirection(DcMotorSimple.Direction.FORWARD);
@@ -45,10 +45,6 @@ public class TestVar extends LinearOpMode {
         shooter1.setDirection(DcMotorSimple.Direction.REVERSE);
         shooter2.setDirection(DcMotorSimple.Direction.FORWARD);
 
-        shooter1.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-        shooter1.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
-        shooter2.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-        shooter2.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
 
         waitForStart();
 
@@ -64,20 +60,23 @@ public class TestVar extends LinearOpMode {
             if (Math.abs(x) < 0.05) x = 0;
             if (Math.abs(rx) < 0.05) rx = 0;
 
-            lf.setPower((y + x + rx * 0.7) * powerMult);
-            rf.setPower((y - x - rx * 0.7) * powerMult);
-            lr.setPower((y - x + rx * 0.7) * powerMult);
-            rr.setPower((y + x - rx * 0.7) * powerMult);
+            lf.setPower((y + x + rx * 0.8) * powerMult);
+            rf.setPower((y - x - rx * 0.8) * powerMult);
+            lr.setPower((y - x + rx * 0.8) * powerMult);
+            rr.setPower((y + x - rx * 0.8) * powerMult);
 
             // ===== SHOOTER SPEED =====
+            double b = gamepad1.right_trigger;
             if (gamepad1.triangle) {
-                power = 0.1;
+                power = 0.42;
             } else if (gamepad1.square) {
-                power = 0.2;
+                power = 0.585;
             } else if (gamepad1.cross) {
-                power = 0.34;
+                power = 0.7;
             } else if (gamepad1.right_bumper) {
-                power = 1;
+                power = 0.45;
+            } else if (gamepad1.right_trigger > 0.1) {
+                power = -b;
             } else {
                 power = 0;
             }
@@ -86,9 +85,9 @@ public class TestVar extends LinearOpMode {
             shooter2.setPower(power);
 
             if (gamepad1.dpad_right){
-                turret.setPower(-0.8);
+                turret.setPower(-0.4);
             } else if (gamepad1.dpad_left) {
-                turret.setPower(0.8);
+                turret.setPower(0.4);
             } else {
                 turret.setPower(0);
             }
@@ -96,24 +95,14 @@ public class TestVar extends LinearOpMode {
             // Shooter PID
 
 
-            if (gamepad1.right_trigger > 0.1){
-                shooter1.setPower(-0.8);
-                shooter2.setPower(-0.8);
-            } else {
-                shooter1.setPower(0);
-                shooter1.setPower(0);
-            }
-
             // ===== INTAKE =====
             if (gamepad1.left_trigger > 0.1) {
-                intake.setPower(1);
-            } else if (gamepad1.left_bumper) {
                 intake.setPower(-1);
+            } else if (gamepad1.left_bumper) {
+                intake.setPower(1);
             } else {
                 intake.setPower(0);
             }
         }
     }
 }
-
-

@@ -26,8 +26,8 @@ import org.firstinspires.ftc.teamcode.system.OdometryModule;
 @Autonomous(name = "Forward Counts Tuner", group = "Autonomous")
 public class ForwardCountsTuner extends OpMode {
     // Change to your actual offsets. See GoBildaPinpointDriver.setOffsets() for details on measuring offsets.
-    public double yOffset = -168.0;
-    public double xOffset = -84.0;
+    public double yOffset = -168.0; //tune
+    public double xOffset = -84.0; //tune
 
     public static int velocity = 1000;
 

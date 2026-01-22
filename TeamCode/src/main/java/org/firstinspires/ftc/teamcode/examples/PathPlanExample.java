@@ -29,8 +29,8 @@ import java.util.Arrays;
 @Config
 @Autonomous(name = "Path Planning Example", group = "Autonomous")
 public class PathPlanExample extends OpMode {
-    public double yOffset = -168.0;
-    public double xOffset = -84.0;
+    public double yOffset = -168.0; //tune
+    public double xOffset = -84.0; //tune
 
     private OdometryHolonomicDrivetrain driveTrain;
     public Pose2D[] positions;
